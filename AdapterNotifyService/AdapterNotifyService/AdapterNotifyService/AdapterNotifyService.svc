@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AdapterNotifyService.AdapterNotifyService" CodeBehind="AdapterNotifyService.svc.cs" %>

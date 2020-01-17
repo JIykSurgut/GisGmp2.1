@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:definitions
+        targetNamespace="http://www.fors.ru/smev3/answer-service/wsdl"
+        xmlns:tns="http://www.fors.ru/smev3/answer-service/wsdl"
+        xmlns:ans="http://www.fors.ru/smev3/answer-service"
+        xmlns:w="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <w:types>
+        <xs:schema
+                targetNamespace="http://www.fors.ru/smev3/answer-service"
+                xmlns:tns="http://www.fors.ru/smev3/answer-service"
+        >
+            <xs:element name="GetResponseAnswerRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="messageId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="AttachmentInfo">
+                <xs:sequence>
+                    <xs:element name="Id" type="xs:string"/>
+                    <xs:element name="FileName" type="xs:string"/>
+                    <xs:element name="MimeType" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="GetResponseAnswerResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestStatus" type="xs:string"/>
+                        <xs:element name="RequestError" type="xs:string" minOccurs="0"/>
+                        <xs:element name="RequestSendDate" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="Response" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="ResponseType" type="xs:string"/>
+                                    <xs:element name="ResponseDate" type="xs:dateTime"/>
+                                    <xs:element name="ResponseContent">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:any processContents="skip"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="Attachment" type="tns:AttachmentInfo" minOccurs="0" maxOccurs="unbounded"/>
+                                    <xs:element name="AsyncProcessingStatusCategory" type="xs:string" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </w:types>
+
+    <w:message name="GetResponseAnswerRequest">
+        <w:part name="body"
+                element="ans:GetResponseAnswerRequest" />
+    </w:message>
+
+    <w:message name="GetResponseAnswerResponse">
+        <w:part name="body"
+                element="ans:GetResponseAnswerResponse" />
+    </w:message>
+
+
+
+    <w:portType name="SmevAnswerService">
+        <w:operation name="GetResponseAnswer">
+            <w:input message="tns:GetResponseAnswerRequest" />
+            <w:output message="tns:GetResponseAnswerResponse" />
+        </w:operation>
+    </w:portType>
+
+    <w:binding name="SmevAnswerServiceSoapBinding"
+               type="tns:SmevAnswerService">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http" />
+        <w:operation name="GetResponseAnswer">
+            <w:input>
+                <soap:body parts="body" use="literal" />
+            </w:input>
+            <w:output>
+                <soap:body parts="body" use="literal" />
+            </w:output>
+        </w:operation>
+    </w:binding>
+
+    <w:service name="SmevAnswerService">
+        <w:port name="SmevAnswerServicePort" binding="tns:SmevAnswerServiceSoapBinding">
+            <soap:address location="http://localhost:8891/services/SmevAnswerService"/>
+        </w:port>
+    </w:service>
+</w:definitions>

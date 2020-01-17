@@ -1,0 +1,6 @@
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\obj\Debug\AdapterNotifyService.csprojAssemblyReference.cache
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\bin\AdapterNotifyService.dll.config
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\bin\AdapterNotifyService.dll
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\bin\AdapterNotifyService.pdb
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\obj\Debug\AdapterNotifyService.dll
+D:\GitHub\GisGmp2.1\AdapterNotifyService\AdapterNotifyService\AdapterNotifyService\obj\Debug\AdapterNotifyService.pdb

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:definitions
+        targetNamespace="http://www.fors.ru/smev3/adapter-notify-service/wsdl"
+        xmlns:tns="http://www.fors.ru/smev3/adapter-notify-service/wsdl"
+        xmlns:ntf="http://www.fors.ru/smev3/adapter-notify-service"
+        xmlns:w="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <w:types>
+        <xs:schema
+                targetNamespace="http://www.fors.ru/smev3/adapter-notify-service"
+                xmlns:tns="http://www.fors.ru/smev3/adapter-notify-service"
+        >
+            <xs:element name="OnResponseReceivedRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestMessageId" type="xs:string"/>
+                        <xs:element name="RequestStatus" type="xs:string"/>
+                        <xs:element name="RequestError" type="xs:string" minOccurs="0"/>
+                        <xs:element name="RequestSendDate" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="Response" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="ResponseMessageId" type="xs:string"/>
+                                    <xs:element name="ResponseType" type="xs:string"/>
+                                    <xs:element name="ResponseDate" type="xs:dateTime"/>
+                                    <xs:element name="ResponseContent" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:any processContents="skip"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="Attachment" type="tns:AttachmentInfo" minOccurs="0" maxOccurs="unbounded"/>
+                                    <xs:element name="AsyncProcessingStatusCategory" type="xs:string" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="OnSupplierRequestReceivedRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RequestMessageId" type="xs:string"/>
+                        <xs:element name="RequestContent" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:any processContents="skip"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Attachment" type="tns:AttachmentInfo" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+
+            </xs:element>
+
+            <xs:complexType name="AttachmentInfo">
+                <xs:sequence>
+                    <xs:element name="Id" type="xs:string"/>
+                    <xs:element name="FileName" type="xs:string"/>
+                    <xs:element name="MimeType" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="OnResponseReceivedResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="OnSupplierRequestReceivedResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </w:types>
+
+    <w:message name="OnResponseReceivedRequest">
+        <w:part name="body"
+                element="ntf:OnResponseReceivedRequest" />
+    </w:message>
+
+    <w:message name="OnResponseReceivedResponse">
+        <w:part name="body"
+                element="ntf:OnResponseReceivedResponse" />
+    </w:message>
+
+    <w:message name="OnSupplierRequestReceivedRequest">
+        <w:part name="body"
+                element="ntf:OnSupplierRequestReceivedRequest" />
+    </w:message>
+
+    <w:message name="OnSupplierRequestReceivedResponse">
+        <w:part name="body"
+                element="ntf:OnSupplierRequestReceivedResponse" />
+    </w:message>
+
+
+
+
+    <w:portType name="AdapterNotifyService">
+        <w:operation name="OnResponseReceived">
+            <w:input message="tns:OnResponseReceivedRequest" />
+            <w:output message="tns:OnResponseReceivedResponse" />
+        </w:operation>
+
+        <w:operation name="OnSupplierRequestReceived">
+            <w:input message="tns:OnSupplierRequestReceivedRequest" />
+            <w:output message="tns:OnSupplierRequestReceivedResponse" />
+        </w:operation>
+    </w:portType>
+
+    <w:binding name="AdapterNotifyServiceSoapBinding"
+               type="tns:AdapterNotifyService">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http" />
+        <w:operation name="OnResponseReceived">
+            <w:input>
+                <soap:body parts="body" use="literal" />
+            </w:input>
+            <w:output>
+                <soap:body parts="body" use="literal" />
+            </w:output>
+        </w:operation>
+
+    </w:binding>
+
+    <w:service name="AdapterNotifyService">
+        <w:port name="AdapterNotifyServicePort" binding="tns:AdapterNotifyServiceSoapBinding">
+            <soap:address location="http://localhost:8891/services/AdapterNotifyService"/>
+        </w:port>
+    </w:service>
+
+</w:definitions>
